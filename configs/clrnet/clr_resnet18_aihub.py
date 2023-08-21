@@ -97,7 +97,7 @@ val_process = [
 ]
 
 dataset_path = './data/tusimple'
-dataset_type = 'Aihub'
+dataset_type = 'TuSimple'
 test_json_file = 'data/tusimple/test_label.json'
 dataset = dict(train=dict(
     type=dataset_type,
