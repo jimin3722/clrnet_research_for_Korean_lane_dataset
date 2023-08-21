@@ -33,17 +33,19 @@ class TuSimple(BaseDataset):
                         json_data = json.load(f)
 
                         lanes = []
-
+                        _lanes = []
                         for annotation in json_data['annotations']:
                             if annotation['class'] == 'traffic_lane':
                                 lanes = [(point['x'], point['y']) for point in annotation['data']]
-                                lanes = [lane for lane in lanes if len(lane) > 0]
+                                #lanes = [lane for lane in lanes if len(lane) > 0]
+                            if (len(lanes) > 1):
+                                _lanes.append(lanes)
 
                         file_name = json_data['image']['file_name']
                         seg_path = os.path.join(self.json_path, "seg", add_path)
                         img_path = os.path.join(self.json_path, "img", add_path)
 
-                        max_lanes = max(max_lanes, len(lanes))
+                        max_lanes = max(max_lanes, len(_lanes))
                         self.data_infos.append({
                             'img_path':
                             osp.join(img_path, file_name),
@@ -52,8 +54,10 @@ class TuSimple(BaseDataset):
                             'mask_path':
                             osp.join(seg_path, file_name),
                             'lanes':
-                            lanes,
+                            _lanes,
                         })
+                        print(self.data_infos)
+                        break
 
         if self.training:
             random.shuffle(self.data_infos)
