@@ -15,7 +15,7 @@ import random
 class Aihub(BaseDataset):
     def __init__(self, data_root, split, processes=None, cfg=None):
         super().__init__(data_root, split, processes, cfg)
-        self.json_path = "/media/jimin/SSD8T/jimin/차선-횡단보도 인지 영상(수도권)/Training/aihub_1900_1200"
+        self.json_path = "/media/jimin/SSD8T/jimin/lane_data/Training/aihub_1900_1200"
         self.add_paths = ["c_1920_1200_daylight_train_1","c_1920_1200_daylight_train_2"]
 
         self.load_annotations()
@@ -26,34 +26,34 @@ class Aihub(BaseDataset):
         max_lanes = 0
 
         for add_path in self.add_paths:
-
-            for filename in os.listdir(os.path.join(self.json_path, add_path)):
-
-                lanes = []
-
+            label_dir = os.path.join(label_dir, "label", add_path)
+            for filename in os.listdir(label_dir):
                 if filename.endswith(".json"):
-                    with open(os.path.join(self.json_path, filename), 'r') as f:
+                    with open(os.path.join(label_dir ,filename), 'r') as f:
                         json_data = json.load(f)
+
+                        lanes = []
+
                         for annotation in json_data['annotations']:
                             if annotation['class'] == 'traffic_lane':
                                 lanes = [(point['x'], point['y']) for point in annotation['data']]
                                 lanes = [lane for lane in lanes if len(lane) > 0]
 
-                file_name = json_data['image']['file_name']
-                seg_path = os.path.join(self.json_path, "seg", add_path)
-                img_path = os.path.join(self.json_path, "seg", add_path)
+                        file_name = json_data['image']['file_name']
+                        seg_path = os.path.join(self.json_path, "seg", add_path)
+                        img_path = os.path.join(self.json_path, "img", add_path)
 
-                max_lanes = max(max_lanes, len(lanes))
-                self.data_infos.append({
-                    'img_path':
-                    osp.join(img_path, file_name),
-                    'img_name':
-                    file_name,
-                    'mask_path':
-                    osp.join(seg_path, file_name),
-                    'lanes':
-                    lanes,
-                })
+                        max_lanes = max(max_lanes, len(lanes))
+                        self.data_infos.append({
+                            'img_path':
+                            osp.join(img_path, file_name),
+                            'img_name':
+                            file_name,
+                            'mask_path':
+                            osp.join(seg_path, file_name),
+                            'lanes':
+                            lanes,
+                        })
 
         if self.training:
             random.shuffle(self.data_infos)
