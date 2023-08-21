@@ -42,6 +42,7 @@ class BaseDataset(Dataset):
         sample.update({'img': img})
 
         if self.training:
+            print("sample['mask_path']:",sample['mask_path'])
             label = cv2.imread(sample['mask_path'], cv2.IMREAD_UNCHANGED)
             if len(label.shape) > 2:
                 label = label[:, :, 0]
@@ -52,6 +53,7 @@ class BaseDataset(Dataset):
             if self.cfg.cut_height != 0:
                 new_lanes = []
                 for i in sample['lanes']:
+                    print("i : ",i)
                     lanes = []
                     for p in i:
                         lanes.append((p[0], p[1] - self.cfg.cut_height))

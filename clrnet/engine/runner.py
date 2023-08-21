@@ -83,7 +83,7 @@ class Runner(object):
                                         self.cfg,
                                         is_train=True)
         
-        print("train_loader : ", train_loader)
+        #print("train_loader : ", train_loader)
 
         self.recorder.logger.info('Start training...')
         start_epoch = 0

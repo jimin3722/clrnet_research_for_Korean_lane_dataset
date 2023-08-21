@@ -50,10 +50,12 @@ class TuSimple(BaseDataset):
                             'img_name':
                             file_name,
                             'mask_path':
-                            osp.join(seg_path, file_name),
+                            osp.join(seg_path, file_name[:-3] + "png"),
                             'lanes':
                             lanes,
                         })
+                        print(self.data_infos)
+                        break
 
         if self.training:
             random.shuffle(self.data_infos)
