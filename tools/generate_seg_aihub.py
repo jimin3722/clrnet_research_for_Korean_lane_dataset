@@ -4,21 +4,22 @@ import numpy as np
 import cv2
 
 json_path = "/home/jimin/camera/차선_샘플/aihub/라벨링데이터/1900_1200/daylight"
-json_path = "/media/jimin/SSD8T/jimin/차선-횡단보도 인지 영상(수도권)/Training/aihub_1900_1200"
+json_path = "/media/jimin/SSD8T/jimin/lane_data/Training/aihub_1900_1200"
 
 add_paths = ["c_1920_1200_daylight_train_1","c_1920_1200_daylight_train_2"]
 
 lanes_coordinates = []
 H, W = 1200, 1900
-SEG_WIDTH = 30
+SEG_WIDTH = 40
 
 for add_path in add_paths:
     # seg_path = os.path.join(json_path, "seg", add_path)
     # /media/jimin/SSD8T/jimin/차선-횡단보도 인지 영상(수도권)/Training/aihub_1900_1200/seg/c_1920_1200_daylight_train_1
     # print(seg_path)
-    for filename in os.listdir(os.path.join(json_path, add_path)):
+    label_dir = os.path.join(json_path, "label", add_path)
+    for filename in os.listdir(label_dir):
         if filename.endswith(".json"):
-            with open(os.path.join(json_path, filename), 'r') as f:
+            with open(os.path.join(label_dir ,filename), 'r') as f:
                 json_data = json.load(f)
                 lanes_coordinate = []
                 lanes = []
@@ -51,7 +52,7 @@ for add_path in add_paths:
                 print(lanes)
 
                 img_path = json_data['image']['file_name']
-                print(img_path)
+                #print(img_path)
                 seg_img = np.zeros((H, W, 3))
                 list_str = []  # str to be written to list.txt
                 for i in range(len(lanes)):
@@ -60,7 +61,7 @@ for add_path in add_paths:
                     #     list_str.append('0')
                     #     continue
                     for j in range(len(coords) - 1):
-                        print(coords[j], coords[j + 1])
+                    #    print(coords[j], coords[j + 1])
                         #mini_h = abs(coords[j][0] - coords[j + 1][0])//10
                         cv2.line(seg_img, coords[j], coords[j + 1],
                                 (i + 1, i + 1, i + 1), SEG_WIDTH // 2)
@@ -72,7 +73,7 @@ for add_path in add_paths:
                 file_name = json_data['image']['file_name']
                 seg_path = os.path.join(seg_path, file_name[:-3] + "png")
                 cv2.imwrite(seg_path, seg_img)
-                break
+                
 
 
                 #cv2.imwrite(seg_path, seg_img)
