@@ -179,7 +179,8 @@ class GenerateLaneLine(object):
         return lanes
 
     def __call__(self, sample):
-        print(sample.keys())
+        # print(sample.keys())
+        # dict_keys(['img_path', 'img_name', 'mask_path', 'lanes', 'img', 'mask'])
         img_org = sample['img']
         line_strings_org = self.lane_to_linestrings(sample['lanes'])
         line_strings_org = LineStringsOnImage(line_strings_org,
@@ -198,7 +199,7 @@ class GenerateLaneLine(object):
                     image=img_org.copy().astype(np.uint8),
                     line_strings=line_strings_org)
             line_strings.clip_out_of_image_()
-            new_anno = {'lanes': self.linestrings_to_lanes(line_strings)}
+            new_anno = {'lanes': self.linestring6s_to_lanes(line_strings)}
             try:
                 annos = self.transform_annotation(new_anno,
                                                   img_wh=(self.img_w,
