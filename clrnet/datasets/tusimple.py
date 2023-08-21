@@ -26,7 +26,7 @@ class TuSimple(BaseDataset):
         max_lanes = 0
 
         for add_path in self.add_paths:
-            label_dir = os.path.join(label_dir, "label", add_path)
+            label_dir = os.path.join( self.json_path, "label", add_path)
             for filename in os.listdir(label_dir):
                 if filename.endswith(".json"):
                     with open(os.path.join(label_dir ,filename), 'r') as f:
