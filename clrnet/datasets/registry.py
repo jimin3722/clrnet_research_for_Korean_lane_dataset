@@ -17,6 +17,7 @@ def build(cfg, registry, default_args=None):
         ]
         return nn.Sequential(*modules)
     else:
+        print("sdjfhgaskjdfgakjsdhfgkajsdhfgk")
         return build_from_cfg(cfg, registry, default_args)
 
 
@@ -37,6 +38,7 @@ def build_dataloader(split_cfg, cfg, is_train=True):
         shuffle = False
 
     dataset = build_dataset(split_cfg, cfg)
+    print("dataset : ",dataset)
 
     init_fn = partial(worker_init_fn, seed=cfg.seed)
 

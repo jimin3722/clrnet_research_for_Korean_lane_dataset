@@ -54,6 +54,8 @@ class Runner(object):
         for i, data in enumerate(train_loader):
             if self.recorder.step >= self.cfg.total_iter:
                 break
+
+
             date_time = time.time() - end
             self.recorder.step += 1
             data = self.to_cuda(data)
@@ -80,26 +82,32 @@ class Runner(object):
         train_loader = build_dataloader(self.cfg.dataset.train,
                                         self.cfg,
                                         is_train=True)
+        
+        print("train_loader : ", train_loader)
 
         self.recorder.logger.info('Start training...')
         start_epoch = 0
-        if self.cfg.resume_from:
-            start_epoch = resume_network(self.cfg.resume_from, self.net,
-                                         self.optimizer, self.scheduler,
-                                         self.recorder)
-        for epoch in range(start_epoch, self.cfg.epochs):
-            self.recorder.epoch = epoch
-            self.train_epoch(epoch, train_loader)
-            if (epoch +
-                    1) % self.cfg.save_ep == 0 or epoch == self.cfg.epochs - 1:
-                self.save_ckpt()
-            if (epoch +
-                    1) % self.cfg.eval_ep == 0 or epoch == self.cfg.epochs - 1:
-                self.validate()
-            if self.recorder.step >= self.cfg.total_iter:
-                break
-            if self.cfg.lr_update_by_epoch:
-                self.scheduler.step()
+        for i, data in enumerate(train_loader):
+            #print(data['lane_line'][30])
+            break
+
+        # if self.cfg.resume_from:
+        #     start_epoch = resume_network(self.cfg.resume_from, self.net,
+        #                                  self.optimizer, self.scheduler,
+        #                                  self.recorder)
+        # for epoch in range(start_epoch, self.cfg.epochs):
+        #     self.recorder.epoch = epoch
+        #     self.train_epoch(epoch, train_loader)
+        #     if (epoch +
+        #             1) % self.cfg.save_ep == 0 or epoch == self.cfg.epochs - 1:
+        #         self.save_ckpt()
+        #     if (epoch +
+        #             1) % self.cfg.eval_ep == 0 or epoch == self.cfg.epochs - 1:
+        #         self.validate()
+        #     if self.recorder.step >= self.cfg.total_iter:
+        #         break
+        #     if self.cfg.lr_update_by_epoch:
+        #         self.scheduler.step()
 
 
     def test(self):

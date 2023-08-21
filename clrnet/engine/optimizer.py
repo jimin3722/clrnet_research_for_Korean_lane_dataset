@@ -10,4 +10,5 @@ def build_optimizer(cfg, net):
         raise ValueError("{} is not defined.".format(cfg_type))
 
     _optim = getattr(torch.optim, cfg_type)
+    print("net.parameters():",net.parameters())
     return _optim(net.parameters(), **cfg_cp)

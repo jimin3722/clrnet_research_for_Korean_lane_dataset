@@ -24,6 +24,7 @@ class Process(object):
                 self.processes.append(process)
             else:
                 raise TypeError('process must be callable or a dict')
+        print("self.processes : ",self.processes)
 
     def __call__(self, data):
         """Call function to apply processes sequentially.

@@ -41,8 +41,12 @@ class ToTensor(object):
     """
     def __init__(self, keys=['img', 'mask'], cfg=None):
         self.keys = keys
+        #'keys': ['img', 'lane_line', 'seg']
+
 
     def __call__(self, sample):
+        # print(sample.keys())
+        # dict_keys(['img_path', 'img_name', 'mask_path', 'lanes', 'img', 'mask', 'lane_line', 'lanes_endpoints', 'gt_points', 'seg'])
         data = {}
         if len(sample['img'].shape) < 3:
             sample['img'] = np.expand_dims(img, -1)
@@ -52,6 +56,7 @@ class ToTensor(object):
                 continue
             data[key] = to_tensor(sample[key])
         data['img'] = data['img'].permute(2, 0, 1)
+
         return data
 
     def __repr__(self):
