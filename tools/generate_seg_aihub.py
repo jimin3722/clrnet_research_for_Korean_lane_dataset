@@ -5,7 +5,11 @@ import cv2
 
 json_path = "/media/jimin/SSD8T/jimin/lane_data/Training/aihub_1920_1200"
 
-add_paths = ["c_1920_1200_daylight_train_1","c_1920_1200_daylight_train_2"]
+add_paths = ["c_1920_1200_daylight_train_3","c_1920_1200_daylight_train_4"]
+
+json_path = "/media/jimin/SSD8T/jimin/lane_data/Validation/aihub_1920_1200"
+
+add_paths = ["c_1920_1200_daylight_train_1",]
 
 lanes_coordinates = []
 H, W = 1200, 1920

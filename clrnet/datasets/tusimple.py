@@ -16,8 +16,13 @@ import random
 class TuSimple(BaseDataset):
     def __init__(self, data_root, split, processes=None, cfg=None):
         super().__init__(data_root, split, processes, cfg)
-        self.json_path = "/media/jimin/SSD8T/jimin/lane_data/Training/aihub_1920_1200"
-        self.add_paths = ["c_1920_1200_daylight_train_1","c_1920_1200_daylight_train_2"]
+        if self.training:
+            self.json_path = "/media/jimin/SSD8T/jimin/lane_data/Training/aihub_1920_1200"
+            self.add_paths = ["c_1920_1200_daylight_train_1","c_1920_1200_daylight_train_2","c_1920_1200_daylight_train_3","c_1920_1200_daylight_train_4"]
+        else:     
+            self.json_path = "/media/jimin/SSD8T/jimin/lane_data/Validation/aihub_1920_1200"
+            self.add_paths = ["c_1920_1200_daylight_train_1"]
+
         self.h_samples = list(range(400, 1200, 10))
         self.load_annotations()
 
