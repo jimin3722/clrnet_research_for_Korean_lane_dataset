@@ -37,14 +37,14 @@ epochs = 50
 batch_size = 64
 
 optimizer = dict(type='AdamW', lr=1.0e-3)  # 3e-4 for batchsize 8
-total_iter = (3616 // batch_size + 1) * epochs
+total_iter = (29999 // batch_size + 1) * epochs
 scheduler = dict(type='CosineAnnealingLR', T_max=total_iter)
 
 eval_ep = 3
 save_ep = epochs
 
 img_norm = dict(mean=[103.939, 116.779, 123.68], std=[1., 1., 1.])
-ori_img_w = 1900
+ori_img_w = 1920
 ori_img_h = 1200
 img_h = 320
 img_w = 800

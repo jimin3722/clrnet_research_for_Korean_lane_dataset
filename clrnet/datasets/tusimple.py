@@ -16,8 +16,9 @@ import random
 class TuSimple(BaseDataset):
     def __init__(self, data_root, split, processes=None, cfg=None):
         super().__init__(data_root, split, processes, cfg)
-        self.json_path = "/media/jimin/SSD8T/jimin/lane_data/Training/aihub_1900_1200"
+        self.json_path = "/media/jimin/SSD8T/jimin/lane_data/Training/aihub_1920_1200"
         self.add_paths = ["c_1920_1200_daylight_train_1","c_1920_1200_daylight_train_2"]
+        self.h_samples = list(range(400, 1200, 10))
         self.load_annotations()
 
     def load_annotations(self):
@@ -67,7 +68,6 @@ class TuSimple(BaseDataset):
 ###################밑에 코드 일단은 안쓰는듯######################
 
     def pred2lanes(self, pred):
-        print("what????????????")
         ys = np.array(self.h_samples) / self.cfg.ori_img_h
         lanes = []
         for lane in pred:

@@ -37,6 +37,7 @@ class BaseDataset(Dataset):
     def __getitem__(self, idx):
         data_info = self.data_infos[idx]
         img = cv2.imread(data_info['img_path'])
+        print("img.shape :",img.shape)
         img = img[self.cfg.cut_height:, :, :]
         sample = data_info.copy()
         sample.update({'img': img})
@@ -48,6 +49,7 @@ class BaseDataset(Dataset):
                 label = label[:, :, 0]
             label = label.squeeze()
             label = label[self.cfg.cut_height:, :]
+            print("label.shape:",label.shape)
             sample.update({'mask': label})
 
             if self.cfg.cut_height != 0:

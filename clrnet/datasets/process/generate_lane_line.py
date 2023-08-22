@@ -185,15 +185,19 @@ class GenerateLaneLine(object):
         line_strings_org = self.lane_to_linestrings(sample['lanes'])
         line_strings_org = LineStringsOnImage(line_strings_org,
                                               shape=img_org.shape)
-
+        # print("img_org.shape : ", img_org.shape)
+        # print("sample['mask'].shape : ", sample['mask'].shape)
         for i in range(30):
             if self.training:
                 mask_org = SegmentationMapsOnImage(sample['mask'],
                                                    shape=img_org.shape)
+                print("asdas:", mask_org.shape)
                 img, line_strings, seg = self.transform(
                     image=img_org.copy().astype(np.uint8),
                     line_strings=line_strings_org,
                     segmentation_maps=mask_org)
+                # print("asdas:", seg.shape)
+                # asdas: (320, 800, 3)
             else:
                 img, line_strings = self.transform(
                     image=img_org.copy().astype(np.uint8),
@@ -217,7 +221,8 @@ class GenerateLaneLine(object):
         sample['lane_line'] = label
         sample['lanes_endpoints'] = lane_endpoints
         sample['gt_points'] = new_anno['lanes']
-        sample['seg'] = seg.get_arr() if self.training else np.zeros(
-            img_org.shape)
+        sample['seg'] = seg.get_arr() if self.training else np.zeros(img_org.shape)
+        
+        # print("asdas:", img_org.shape)
 
         return sample

@@ -3,15 +3,14 @@ import os
 import numpy as np
 import cv2
 
-json_path = "/home/jimin/camera/차선_샘플/aihub/라벨링데이터/1900_1200/daylight"
-json_path = "/media/jimin/SSD8T/jimin/lane_data/Training/aihub_1900_1200"
+json_path = "/media/jimin/SSD8T/jimin/lane_data/Training/aihub_1920_1200"
 
 add_paths = ["c_1920_1200_daylight_train_1","c_1920_1200_daylight_train_2"]
 
 lanes_coordinates = []
-H, W = 1200, 1900
+H, W = 1200, 1920
 SEG_WIDTH = 40
-
+cnt = 0
 for add_path in add_paths:
     # seg_path = os.path.join(json_path, "seg", add_path)
     # /media/jimin/SSD8T/jimin/차선-횡단보도 인지 영상(수도권)/Training/aihub_1900_1200/seg/c_1920_1200_daylight_train_1
@@ -49,7 +48,7 @@ for add_path in add_paths:
                         break
                 for i in range(6):
                     lanes.append([] if idx[i] is None else _lanes[idx[i]])
-                print(lanes)
+                # print(lanes)
 
                 img_path = json_data['image']['file_name']
                 #print(img_path)
@@ -73,7 +72,8 @@ for add_path in add_paths:
                 file_name = json_data['image']['file_name']
                 seg_path = os.path.join(seg_path, file_name[:-3] + "png")
                 cv2.imwrite(seg_path, seg_img)
-                
+                cnt += 1
+                print(cnt)
 
 
                 #cv2.imwrite(seg_path, seg_img)
