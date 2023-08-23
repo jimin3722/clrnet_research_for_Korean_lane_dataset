@@ -33,11 +33,11 @@ neck = dict(type='FPN',
 
 test_parameters = dict(conf_threshold=0.40, nms_thres=50, nms_topk=max_lanes)
 
-epochs = 50
-batch_size = 64
+epochs = 40
+batch_size = 128
 
 optimizer = dict(type='AdamW', lr=1.0e-3)  # 3e-4 for batchsize 8
-total_iter = (29999 // batch_size + 1) * epochs
+total_iter = (59999 // batch_size + 1) * epochs
 scheduler = dict(type='CosineAnnealingLR', T_max=total_iter)
 
 eval_ep = 3

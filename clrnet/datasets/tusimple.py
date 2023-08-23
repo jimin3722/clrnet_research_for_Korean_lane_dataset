@@ -21,7 +21,7 @@ class TuSimple(BaseDataset):
             self.add_paths = ["c_1920_1200_daylight_train_1","c_1920_1200_daylight_train_2","c_1920_1200_daylight_train_3","c_1920_1200_daylight_train_4"]
         else:     
             self.json_path = "/media/jimin/SSD8T/jimin/lane_data/Validation/aihub_1920_1200"
-            self.add_paths = ["c_1920_1200_daylight_train_1"]
+            self.add_paths = ["c_1920_1200_daylight_validation_1"]
 
         self.h_samples = list(range(400, 1200, 10))
         self.load_annotations()
@@ -62,8 +62,7 @@ class TuSimple(BaseDataset):
                             'lanes':
                             _lanes,
                         })
-                        print(self.data_infos)
-                        break
+                print(len(self.data_infos))
 
         if self.training:
             random.shuffle(self.data_infos)
@@ -105,11 +104,13 @@ class TuSimple(BaseDataset):
             output_file.write('\n'.join(lines))
 
     def evaluate(self, predictions, output_basedir, runtimes=None):
-
-        pred_filename = os.path.join(output_basedir,
-                                     'tusimple_predictions.json')
-        self.save_tusimple_predictions(predictions, pred_filename, runtimes)
-        result, acc = LaneEval.bench_one_submit(pred_filename,
-                                                self.cfg.test_json_file)
-        self.logger.info(result)
-        return acc
+        try:
+            pred_filename = os.path.join(output_basedir,
+                                        'tusimple_predictions.json')
+            self.save_tusimple_predictions(predictions, pred_filename, runtimes)
+            result, acc = LaneEval.bench_one_submit(pred_filename,
+                                                    self.cfg.test_json_file)
+            self.logger.info(result)
+            return acc
+        except:
+            return 0

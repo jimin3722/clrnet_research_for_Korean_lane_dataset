@@ -52,7 +52,7 @@ class Runner(object):
         end = time.time()
         max_iter = len(train_loader)
         for i, data in enumerate(train_loader):
-            print(data['seg'].shape)
+            print("data['seg'].shape : ",data['seg'].shape)
             
             if self.recorder.step >= self.cfg.total_iter:
                 break

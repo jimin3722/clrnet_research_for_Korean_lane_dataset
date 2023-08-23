@@ -68,7 +68,7 @@ def build_from_cfg(cfg, registry, default_args=None):
     args = cfg.copy()
     obj_type = args.pop('type')
     if is_str(obj_type):
-        print("cfg : ",obj_type)
+        #print("cfg : ",obj_type)
         obj_cls = registry.get(obj_type)
         if obj_cls is None:
             raise KeyError('{} is not in the {} registry'.format(
@@ -81,7 +81,7 @@ def build_from_cfg(cfg, registry, default_args=None):
     if default_args is not None:
         for name, value in default_args.items():
             args.setdefault(name, value)
-    print(cfg)
+    #print(cfg)
     # print("asdf1",obj_cls)
     # print("asdf2",obj_cls(**args))
     return obj_cls(**args)

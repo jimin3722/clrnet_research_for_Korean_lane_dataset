@@ -191,7 +191,7 @@ class GenerateLaneLine(object):
             if self.training:
                 mask_org = SegmentationMapsOnImage(sample['mask'],
                                                    shape=img_org.shape)
-                print("asdas:", mask_org.shape)
+                # print("asdas:", mask_org.shape)
                 img, line_strings, seg = self.transform(
                     image=img_org.copy().astype(np.uint8),
                     line_strings=line_strings_org,
