@@ -104,13 +104,13 @@ class TuSimple(BaseDataset):
             output_file.write('\n'.join(lines))
 
     def evaluate(self, predictions, output_basedir, runtimes=None):
-        try:
+    
             pred_filename = os.path.join(output_basedir,
                                         'tusimple_predictions.json')
-            self.save_tusimple_predictions(predictions, pred_filename, runtimes)
-            result, acc = LaneEval.bench_one_submit(pred_filename,
-                                                    self.cfg.test_json_file)
-            self.logger.info(result)
-            return acc
-        except:
+            # self.save_tusimple_predictions(predictions, pred_filename, runtimes)
+            # result, acc = LaneEval.bench_one_submit(pred_filename,
+            #                                         self.cfg.test_json_file)
+            # self.logger.info(result)
             return 0
+            # return acc
+
